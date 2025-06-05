@@ -3120,7 +3120,7 @@ function Library:CreateWindow(...)
             BackgroundTransparency = 1;
             BorderSizePixel = 0;
             Position = UDim2.new(0, 0, 0, 8);
-            Size = UDim2.new(columnWidth, -4, 1, -16);
+            Size = UDim2.new(columnWidth, -4, 1, -31);
             AutomaticCanvasSize = Enum.AutomaticSize.Y;
             CanvasSize = UDim2.new();
             BottomImage = "";
@@ -3129,12 +3129,12 @@ function Library:CreateWindow(...)
             ZIndex = 2;
             Parent = TabFrame;
         })
-
+        
         local CenterSide = Library:Create("ScrollingFrame", {
             BackgroundTransparency = 1;
             BorderSizePixel = 0;
             Position = UDim2.new(columnWidth + spacing, 0, 0, 8);
-            Size = UDim2.new(columnWidth, -4, 1, -16);
+            Size = UDim2.new(columnWidth, -4, 1, -31);
             AutomaticCanvasSize = Enum.AutomaticSize.Y;
             CanvasSize = UDim2.new();
             BottomImage = "";
@@ -3143,12 +3143,12 @@ function Library:CreateWindow(...)
             ZIndex = 2;
             Parent = TabFrame;
         })
-
+        
         local RightSide = Library:Create("ScrollingFrame", {
             BackgroundTransparency = 1;
             BorderSizePixel = 0;
             Position = UDim2.new(2 * (columnWidth + spacing), 0, 0, 8);
-            Size = UDim2.new(columnWidth, -4, 1, -16);
+            Size = UDim2.new(columnWidth, -4, 1, -31);
             AutomaticCanvasSize = Enum.AutomaticSize.Y;
             CanvasSize = UDim2.new();
             BottomImage = "";
@@ -3157,25 +3157,25 @@ function Library:CreateWindow(...)
             ZIndex = 2;
             Parent = TabFrame;
         })
-
+        
         Library:Create('UIListLayout', {
-            Padding = UDim.new(0, 16);
+            Padding = UDim.new(0, 8);
             FillDirection = Enum.FillDirection.Vertical;
             SortOrder = Enum.SortOrder.LayoutOrder;
             HorizontalAlignment = Enum.HorizontalAlignment.Center;
             Parent = LeftSide;
         });
-
+        
         Library:Create('UIListLayout', {
-            Padding = UDim.new(0, 16);
+            Padding = UDim.new(0, 8);
             FillDirection = Enum.FillDirection.Vertical;
             SortOrder = Enum.SortOrder.LayoutOrder;
             HorizontalAlignment = Enum.HorizontalAlignment.Center;
             Parent = RightSide;
         });
-
+        
         Library:Create('UIListLayout', {
-            Padding = UDim.new(0, 16);
+            Padding = UDim.new(0, 8);
             FillDirection = Enum.FillDirection.Vertical;
             SortOrder = Enum.SortOrder.LayoutOrder;
             HorizontalAlignment = Enum.HorizontalAlignment.Center;
