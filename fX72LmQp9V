@@ -3114,7 +3114,7 @@ function Library:CreateWindow(...)
         });
 
         local spacing = 0.01
-        local columnWidth = (1 - 2 * spacing) / 3
+        local columnWidth = (1 - 1 * spacing) / 2
 
         local LeftSide = Library:Create("ScrollingFrame", {
             BackgroundTransparency = 1;
