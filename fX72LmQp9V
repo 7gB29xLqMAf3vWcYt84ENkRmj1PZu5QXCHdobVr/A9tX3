@@ -3113,8 +3113,9 @@ function Library:CreateWindow(...)
             Parent = TabContainer;
         });
 
-        local spacing = 0.01
-        local columnWidth = (1 - 1 * spacing) / 2
+        
+        local spacing = 0.02
+        local columnWidth = (2 - 3 * spacing) / 4
 
         local LeftSide = Library:Create("ScrollingFrame", {
             BackgroundTransparency = 1;
