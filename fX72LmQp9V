@@ -2989,7 +2989,7 @@ function Library:CreateWindow(...)
 
     local WindowLabel = Library:CreateLabel({
         Position = UDim2.new(0, 7, 0, 0);
-        Size = UDim2.new(0, 878, 0, 25);
+        Size = UDim2.new(0, 779, 0, 25);
         Text = Config.Title or '';
         RichText = true,
         TextXAlignment = Enum.TextXAlignment.Center;
