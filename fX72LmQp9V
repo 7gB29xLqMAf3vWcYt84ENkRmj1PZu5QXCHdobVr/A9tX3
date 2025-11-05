@@ -162,30 +162,61 @@ function Library:CreateLabel(Properties, IsHud)
 end;
 
 function Library:MakeDraggable(Instance, Cutoff)
-    Instance.Active = true;
+    Instance.Active = true
+
+    local Dragging = false
+    local DragStart, StartPos
+    local DragTween
+
+    local Smoothness = 0.15
 
     Instance.InputBegan:Connect(function(Input)
         if Input.UserInputType == Enum.UserInputType.MouseButton1 then
             local ObjPos = Vector2.new(
                 Mouse.X - Instance.AbsolutePosition.X,
                 Mouse.Y - Instance.AbsolutePosition.Y
-            );
+            )
 
             if ObjPos.Y > (Cutoff or 40) then
-                return;
-            end;
+                return
+            end
 
-            while InputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) do
-                Instance.Position = UDim2.new(
-                    0,
-                    Mouse.X - ObjPos.X + (Instance.Size.X.Offset * Instance.AnchorPoint.X),
-                    0,
-                    Mouse.Y - ObjPos.Y + (Instance.Size.Y.Offset * Instance.AnchorPoint.Y)
-                );
+            Dragging = true
+            DragStart = Vector2.new(Mouse.X, Mouse.Y)
+            StartPos = Instance.Position
 
-                RenderStepped:Wait();
-            end;
-        end;
+            Input.Changed:Connect(function()
+                if Input.UserInputState == Enum.UserInputState.End then
+                    Dragging = false
+                    if DragTween then
+                        DragTween:Cancel()
+                    end
+                end
+            end)
+        end
+    end)
+
+    RenderStepped:Connect(function()
+        if Dragging then
+            local Delta = Vector2.new(Mouse.X, Mouse.Y) - DragStart
+            local NewPosition = UDim2.new(
+                StartPos.X.Scale,
+                StartPos.X.Offset + Delta.X,
+                StartPos.Y.Scale,
+                StartPos.Y.Offset + Delta.Y
+            )
+
+            if DragTween then
+                DragTween:Cancel()
+            end
+
+            DragTween = TweenService:Create(
+                Instance,
+                TweenInfo.new(Smoothness, Enum.EasingStyle.Sine, Enum.EasingDirection.Out),
+                { Position = NewPosition }
+            )
+            DragTween:Play()
+        end
     end)
 end;
 
@@ -2972,12 +3003,28 @@ function Library:CreateWindow(...)
 
     Library:MakeDraggable(Outer, 25);
 
+    local function GetContrastedGlowColor(color)
+        local r, g, b = color.R, color.G, color.B
+        local brightness = (r * 0.299 + g * 0.587 + b * 0.114) 
+
+        if brightness < 0.4 then
+            local factor = 1.5 - brightness
+            return Color3.new(
+                math.clamp(r * factor, 0, 1),
+                math.clamp(g * factor, 0, 1),
+                math.clamp(b * factor, 0, 1)
+            )
+        else
+            return color
+        end
+    end
+
     local GlowEffect = Library:Create("ImageLabel", {
         AnchorPoint = Vector2.new(0.5, 0.5),
         BackgroundTransparency = 1,
         Image = "rbxassetid://18245826428",
-        ImageColor3 = Library.AccentColor,
-        ImageTransparency = 0.65,
+        ImageColor3 = GetContrastedGlowColor(Library.AccentColor),
+        ImageTransparency = 0.55,
         Position = UDim2.fromScale(0.5, 0.5),
         ScaleType = Enum.ScaleType.Slice,
         Size = UDim2.new(1, 35, 1, 35),
@@ -2985,6 +3032,7 @@ function Library:CreateWindow(...)
         ZIndex = 0,
         Parent = Outer,
     })
+
 
     Library:AddToRegistry(GlowEffect, {
         ImageColor3 = 'AccentColor';
