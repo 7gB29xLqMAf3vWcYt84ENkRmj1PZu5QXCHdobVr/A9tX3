@@ -483,6 +483,9 @@ do
             Parent = DisplayFrame;
         });
 
+        CheckerFrame.Visible = true
+        CheckerFrame.ZIndex = DisplayFrame.ZIndex - 1
+
         -- 1/16/23
         -- Rewrote this to be placed inside the Library ScreenGui
         -- There was some issue which caused RelativeOffset to be way off
@@ -888,7 +891,7 @@ do
             HueBox.Text = '#' .. ColorPicker.Value:ToHex()
             RgbBox.Text = table.concat({ math.floor(ColorPicker.Value.R * 255), math.floor(ColorPicker.Value.G * 255), math.floor(ColorPicker.Value.B * 255) }, ', ')
 
-            Library:SafeCallback(ColorPicker.Callback, ColorPicker.Value);
+            Library:SafeCallback(ColorPicker.Callback, ColorPicker.Value, ColorPicker.Transparency);
             Library:SafeCallback(ColorPicker.Changed, ColorPicker.Value);
         end;
 
